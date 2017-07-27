@@ -19,7 +19,7 @@ var app = app || {};
 		events: {
 			'click .toggle': 'toggleCompleted',
 			'dblclick label': 'edit',
-			'click .priority-btn': 'priority',
+			'click .priority-btn': 'togglePriority',
 			'click .edit-btn': 'edit',
 			'click .destroy': 'clear',
 			'keypress .edit': 'updateOnEnter',
@@ -52,6 +52,7 @@ var app = app || {};
 
 			this.$el.html(this.template(this.model.toJSON()));
 			this.$el.toggleClass('completed', this.model.get('completed'));
+			this.$el.toggleClass('priority', this.model.get('priority'));
 			this.toggleVisible();
 			this.$input = this.$('.edit');
 			return this;
@@ -70,6 +71,11 @@ var app = app || {};
 		// Toggle the `"completed"` state of the model.
 		toggleCompleted: function () {
 			this.model.toggle();
+		},
+
+		// Toggle the `"priority"` state of the model.
+		togglePriority: function () {
+			this.model.pToggle();
 		},
 
 		// Switch this view into `"editing"` mode, displaying the input field.
@@ -131,8 +137,9 @@ var app = app || {};
 			this.model.destroy();
 		},
 		// make label red when priority button is pressed
-		priority: function() {
-			this.$el.addClass('priority');
-		}
+		// priority: function() {
+		// 	this.model.toggle();
+		// 	this.$el.addClass('priority');
+		// }
 	});
 })(jQuery);
